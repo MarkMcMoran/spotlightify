@@ -1,5 +1,7 @@
 from os import sep
-from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget, QLineEdit
+
+from PyQt5.QtGui import QKeySequence
+from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget, QLineEdit, QShortcut
 from PyQt5 import QtCore, QtGui
 from spotlight.commands.handler import CommandHandler
 from widgets import FunctionButtonsRow, SuggestRow, SvgButton
@@ -40,6 +42,9 @@ class Ui(QWidget):
         self.exit = 0
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.Tool | QtCore.Qt.WindowStaysOnTopHint)
         self.create_widgets()
+        self.shortcut = QShortcut(QKeySequence("Ctrl+space"), self)
+        self.shortcut.activated.connect(position_app)
+
 
     def create_widgets(self):
         self.resize(540, self.small_row_height + self.standard_row_height)  # makes up the height of the widget
@@ -59,10 +64,10 @@ class Ui(QWidget):
         self.textbox.resize(481, 41)
         self.textbox.installEventFilter(self)
         self.textbox.setStyleSheet(f'''
-                        QLineEdit 
+                        QLineEdit
                         {{
                             border: 0;
-                            background: {self.active_theme["bg"]}; 
+                            background: {self.active_theme["bg"]};
                             color: {self.active_theme["text"]};
                             font-size: 25px;
                             border-radius: 2px;
