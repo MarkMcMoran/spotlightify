@@ -52,7 +52,6 @@ def show_ui():
     sleep(0.1)
     ui.raise_()
     ui.activateWindow()
-    focus_ui()
     ui.function_row.refresh(None)  # refreshes function row buttons
 
 
@@ -66,19 +65,6 @@ def refresh_token():
             token_info = sp_oauth.get_access_token(as_dict=True)
     except:
         print("[WARNING] Could not refresh user API token")
-
-
-
-def focus_ui():  # Only way I could think of to properly focus the ui
-    mouse = Controller()
-    # mouse position before focus
-    mouse_pos_before = mouse.position
-    # changing the mouse position for click
-    target_pos_x = ui.pos().x() + ui.textbox.pos().x()
-    target_pos_y = ui.pos().y() + ui.textbox.pos().y()
-    mouse.position = (target_pos_x, target_pos_y)
-    mouse.click(Button.left)
-    mouse.position = mouse_pos_before
 
 
 def tray_icon_activated(reason):
