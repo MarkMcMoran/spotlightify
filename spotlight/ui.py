@@ -1,5 +1,6 @@
 from os import sep
 
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget, QLineEdit, QShortcut
 from PyQt5 import QtCore, QtGui
@@ -16,8 +17,10 @@ class Ui(QWidget):
     def __init__(self, sp: Spotify, command_handler, parent=None):
         QWidget.__init__(self, parent)
         # for spotify interaction
+        self.textbox = QLineEdit(self)
         self.command_handler = command_handler
         self.sp = sp
+        self.setFocusPolicy(QtCore.Qt.NoFocus)
         # row positioning
         center = position_app()
         self.move(center)
@@ -45,7 +48,6 @@ class Ui(QWidget):
         self.shortcut = QShortcut(QKeySequence("Ctrl+space"), self)
         self.shortcut.activated.connect(position_app)
 
-
     def create_widgets(self):
         self.resize(540, self.small_row_height + self.standard_row_height)  # makes up the height of the widget
 
@@ -55,10 +57,9 @@ class Ui(QWidget):
         self.svgWidget.setSize(39, 39)
         self.svgWidget.move(9, self.small_row_height + 9)
 
-        self.textbox = QLineEdit(self)
         self.textbox.returnPressed.connect(self.textbox_return_pressed_handler)
         self.textbox.textChanged.connect(self.text_changed_handler)
-        self.textbox.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.textbox.grabKeyboard()
         self.textbox.move(51, self.small_row_height + 9)
         self.textbox.setPlaceholderText("Spotlightify Search")
         self.textbox.resize(481, 41)
