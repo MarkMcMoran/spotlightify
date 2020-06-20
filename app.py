@@ -53,7 +53,6 @@ def show_ui():
     sleep(0.1)
     ui.raise_()
     ui.activateWindow()
-    focus_ui()
     ui.function_row.refresh(None)  # refreshes function row buttons
 
 def refresh_token():
@@ -72,14 +71,7 @@ def tray_icon_activated(reason):
     if reason == tray.Trigger:  # tray.Trigger is left click
         show_ui()
 
-def focus_ui():  # Only way I could think of to properly focus the ui
-    mouse = Controller()
-    mouse_pos_before = mouse.position
-    # changing the mouse position for click
-    target_pos_x = ui.pos().x() + ui.textbox.pos().x()
-    target_pos_y = ui.pos().y() + ui.textbox.pos().y()
-    mouse.position = (target_pos_x, target_pos_y)
-    mouse.click(Button.left)
+
 
 
 song_queue = SongQueue()
